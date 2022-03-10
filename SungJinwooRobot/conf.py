@@ -40,7 +40,7 @@ DEFAULTS = {
 CONF_PATH = 'data/bot_conf.yaml'
 if os.name == 'nt':
     log.debug("Detected Windows, changing config path...")
-    CONF_PATH = os.getcwd() + "\\data\\bot_conf.yaml"
+    CONF_PATH = f'{os.getcwd()}\\data\\bot_conf.yaml'
 
 if os.path.isfile(CONF_PATH):
     log.info(CONF_PATH)
@@ -51,60 +51,48 @@ else:
     
 
 def get_str_key(name, required=False):
-    if name in DEFAULTS:
-        default = DEFAULTS[name]
-    else:
-        default = None
+    default = DEFAULTS[name] if name in DEFAULTS else None
     if not (data := env.str(name, default=default)) and not required:
-        log.warning('No str key: ' + name)
+        log.warning(f'No str key: {name}')
         return None
     elif not data:
-        log.critical('No str key: ' + name)
+        log.critical(f'No str key: {name}')
         exit(2)
     else:
         return data
 
 
 def get_int_key(name, required=False):
-    if name in DEFAULTS:
-        default = DEFAULTS[name]
-    else:
-        default = None
+    default = DEFAULTS[name] if name in DEFAULTS else None
     if not (data := env.int(name, default=default)) and not required:
-        log.warning('No int key: ' + name)
+        log.warning(f'No int key: {name}')
         return None
     elif not data:
-        log.critical('No int key: ' + name)
+        log.critical(f'No int key: {name}')
         exit(2)
     else:
         return data
 
 
 def get_list_key(name, required=False):
-    if name in DEFAULTS:
-        default = DEFAULTS[name]
-    else:
-        default = None
+    default = DEFAULTS[name] if name in DEFAULTS else None
     if not (data := env.list(name, default=default)) and not required:
-        log.warning('No list key: ' + name)
+        log.warning(f'No list key: {name}')
         return []
     elif not data:
-        log.critical('No list key: ' + name)
+        log.critical(f'No list key: {name}')
         exit(2)
     else:
         return data
 
 
 def get_bool_key(name, required=False):
-    if name in DEFAULTS:
-        default = DEFAULTS[name]
-    else:
-        default = None
+    default = DEFAULTS[name] if name in DEFAULTS else None
     if not (data := env.bool(name, default=default)) and not required:
-        log.warning('No bool key: ' + name)
+        log.warning(f'No bool key: {name}')
         return False
     elif not data:
-        log.critical('No bool key: ' + name)
+        log.critical(f'No bool key: {name}')
         exit(2)
     else:
         return data
